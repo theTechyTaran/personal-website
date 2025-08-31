@@ -4,25 +4,76 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Techy Taran</title>
+	<style>
+		.content-container {
+			display: flex;
+			align-items: flex-start;
+			margin: 20px 0;
+			min-height: 100vh;
+		}
+		.text-content {
+			flex: 2;
+			padding-right: 20px;
+		}
+		.image-container {
+			flex: 1;
+			position: sticky;
+			top: 20px;
+			text-align: center;
+			margin-left: 20px;
+			margin-right: 20px;
+			align-self: flex-start;
+		}
+		.imageToTheSide {
+			max-width: 100%;
+		}
+		ul {
+			padding-left: 20px;
+			margin-bottom: 20px;
+		}
+		li {
+			cursor: pointer;
+			margin-bottom: 5px;
+			transition: color 0.3s ease;
+		}
+		li:hover {
+			color: #bc4114;
+			font-weight: bold;
+		}
+		#infoText {
+			padding: 15px;
+			background-color: #f8f8f8;
+			border-left: 4px solid #000000;
+			margin: 15px 0;
+		}
+	</style>
 </head>
 <body>
-	<p>Hello! My name is Taran, but you can call me Tay. I am a 26 year old furry on the internet who was to lazy to make a proper site!</p>
-	<p>The weird thing is that this site is hosted on a powerful VPS (Virtal Private Server), with a good domain name! The website might be better one day! I mean I pay 40 dollars a month, so I might... not want to waste this.</p>
-	<p>I actually know a lot of technology related matters, like Server Administration, Backend Development and Machine Learning Research, witch a touch of engineering. But this is just stuff I do online, I have a life.</p>
+	<div class="content-container">
+		<div class="text-content">
+			<p>Hello! My name is Taran, but you can call me Tay. I am a 26 year old furry on the internet living in Washington DC.. sho was to lazy to make a proper site!</p>
+			<!--<p>The weird thing is that this site is hosted on a powerful VPS (Virtal Private Server), with a good domain name! The website might be better one day! I mean I pay 40 dollars a month, so I might... not want to waste this.</p>-->
+			<p>I actually know a lot of technology related matters, like Server Administration, Backend Development and Machine Learning Research, witch a touch of engineering. But this is just stuff I do online, I have a life.</p>
 
-	<h4>Stuff I currently do online (click on any item for more info):</h4>
-	<ul>
-		<li onclick="changeMessage('fusion')">C++/Assembly Server Developer for Fusion Fall</li>
-		<li onclick="changeMessage('hypixel')">Hypixel Pit Mod Developer (IDK the name of it yet)</li>
-		<li onclick="changeMessage('youtube')">Making shitty YouTube Videos on Hypickel</li>
-		<li onclick="changeMessage('vrchat')">Chronic VRChat player</li>
-		<li onclick="changeMessage('sea')">Sea of Thieves Milsim LOVER (Yarrrr he's a pirate!)</li>
-		<li onclick="changeMessage('blackspigot')"><b>SOON:</b> Blackspigot Staff Member</li>
-	</ul>
-	
-	<p id="infoText">Click on any item in the list above to learn more about it!</p>
-	
-	<p>Well, that's about it! Hopefully my website was OK at best :3</p>
+			<h4>Stuff I currently do online (click on any item for more info):</h4>
+			<ul>
+				<li onclick="changeMessage('fusion')">C++/Assembly Server Developer for Fusion Fall</li>
+				<li onclick="changeMessage('hypixel')">Hypixel Pit Mod Developer (IDK the name of it yet)</li>
+				<li onclick="changeMessage('youtube')">Making shitty YouTube Videos on Hypickel</li>
+				<li onclick="changeMessage('vrchat')">Chronic VRChat player</li>
+				<li onclick="changeMessage('sea')">Sea of Thieves Milsim LOVER (Yarrrr he's a pirate!)</li>
+				<li onclick="changeMessage('blackspigot')"><b>SOON:</b> Blackspigot Staff Member</li>
+			</ul>
+			
+			<p id="infoText">Click on any item in the list above to learn more about it!</p>
+			
+			<p>Well, that's about it! Hopefully my website was OK at best :3</p>
+		</div>
+		<div class="image-container">
+			<img src="./images/meInASuit.png" alt="Frieren Journey's End PNG" class="imageToTheSide">
+			<p>OMG IT'S ME! :3</p>
+		</div>
+	</div>
 	
 	<script>
 		function changeMessage(type) {
