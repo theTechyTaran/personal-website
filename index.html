@@ -70,18 +70,14 @@
 <body>
 	<div class="content-container">
 		<div class="text-content">
-			<p>Hello! My name is Taran, but you can call me Tay. I am a 26 year old furry on the internet living in Washington DC.. sho was to lazy to make a proper site!</p>
-			<!--<p>The weird thing is that this site is hosted on a powerful VPS (Virtal Private Server), with a good domain name! The website might be better one day! I mean I pay 40 dollars a month, so I might... not want to waste this.</p>-->
+			<p>Hello! My name is Taran. I am a 26 year old furry on the internet. Who is to lazy to make a proper site!</p>
 			<p>I actually know a lot of technology related matters, like Server Administration, Backend Development and Machine Learning Research, witch a touch of engineering. But this is just stuff I do online, I have a life.</p>
 
 			<h4>Stuff I currently do online (click on any item for more info):</h4>
 			<ul>
+				<li onclick="changeMessage('blackspigot')">Blackspigot Administrator/Leadership | Community Managment</li>
 				<li onclick="changeMessage('fusion')">C++/Assembly Server Developer for Fusion Fall</li>
-				<li onclick="changeMessage('hypixel')">Hypixel Pit Mod Developer (IDK the name of it yet)</li>
-				<li onclick="changeMessage('youtube')">Making shitty YouTube Videos on Hypickel</li>
 				<li onclick="changeMessage('vrchat')">Chronic VRChat player</li>
-				<li onclick="changeMessage('sea')">Sea of Thieves Milsim LOVER (Yarrrr he's a pirate!)</li>
-				<li onclick="changeMessage('blackspigot')"><b>SOON:</b> Blackspigot Staff Member</li>
 			</ul>
 			
 			<p id="infoText">Click on any item in the list above to learn more about it!</p>
@@ -102,20 +98,11 @@
 				case 'fusion':
 					infoText.textContent = "Fusion Fall is an old Cartoon Network MMO, and I work on porting and maintaining a community modding version of the server. I am paid to do this.";
 					break;
-				case 'hypixel':
-					infoText.textContent = "I am currently working on making a QQL Mod for the Pit that works as a live service for groups for KOS/Truce lists with live updates.";
-					break;
-				case 'youtube':
-					infoText.textContent = "I am trying to get all Hypixel Achievements, as well as reach level 250! I make story videos about my journey! Currently working on a fun one for the Pit!";
-					break;
 				case 'vrchat':
 					infoText.textContent = "I have played this game for 4K hours now, I love the game so much my friends... I cannot put this into words. I have run a few clubs before. It's nice to be someone else for a change.";
 					break;
-				case 'sea':
-					infoText.textContent = "I play a Milsim called the USN of SOT. Where I currently run a squad and am on the USS Phantom. This is how I unwind after a long day IRL, and where a lot of my friends online are from!";
-					break;
 				case 'blackspigot':
-					infoText.textContent = "Hopefully I will be when they start adding more VrChat content, as well as the site is coming more alive again, so I might help moderate it.";
+					infoText.textContent = "I am an Administrator for BlackSpigot, the oldest and largest Minecraft Piracy Site!";
 					break;
 				default:
 					infoText.textContent = "Click on any item in the list above to learn more about it!";
