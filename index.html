@@ -27,6 +27,7 @@
 		}
 		body {
 			display: flex;
+			justify-content: center;
 		}
 		.content-container {
 			display: flex;
@@ -59,7 +60,8 @@
 			padding: 15px;
 		}
 		.imageToTheSide {
-			height: calc(100vh - 45px);
+			padding-top: 20px;
+			height: calc(100vh - 85px);
 		}
 		ul {
 			padding-left: 20px;
@@ -98,9 +100,51 @@
 		.webring-content a img:hover {
 			transform: scale(1.05);
 		}
+		.mobile-bg {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			object-fit: cover;
+			object-position: top center;
+			z-index: -2;
+			opacity: 0.2;
+			display: none;
+		}
+
+
+		@media screen and (max-width: 800px) {
+			.image-container {
+				display:none;
+			}
+			.text-content {
+				padding-right: 0;
+			}
+			.mobile-bg {
+				display: block
+			}
+			/* * {
+				font-size: 3.5vw
+			} */
+		}
+
+		@media screen and (max-width: 500px) {
+			* {
+				font-size: 3.5vw
+			}
+		}
+
+		@media screen and (min-width: 1000px) {
+			.content-container {
+				width: calc(1000px + 15vw);
+			}
+		}
+
 	</style>
 </head>
 <body>
+	<img class="mobile-bg" src="./meInASuit.png" alt="Frieren Journey's End PNG">
 	<div class="content-container">
 		<div class="text-content">
 			<p>Hello! My name is Taran. I am a 26 year old furry on the internet. Who is so lazy to make a proper site that her friend baddie had to help!</p>
