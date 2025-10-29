@@ -4,49 +4,84 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Techy Taran</title>
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
 	<style>
+
+		* { /* this adjusts everything so we can have control of the padding and margin of body */
+			margin: 0;
+			padding: 0;
+
+			font-family: "Noto Sans", sans-serif;
+			font-optical-sizing: auto;
+			font-style: normal;
+			font-variation-settings:
+				"wdth" 100;
+		}
 		:root {
 			background-color: #1e1e1e;
 			color: white;
 		}
+		body {
+			display: flex;
+			justify-content: center;
+		}
 		.content-container {
 			display: flex;
-			align-items: flex-start;
-			margin: 20px 0;
-			min-height: 100vh;
+			align-items: center;
+			/* margin: 20px 0; */
+			height: 100vh;
+			width: 100vw;
+			padding-left: 30px;
+			padding-right: 30px;
+			overflow: hidden;
 		}
 		.text-content {
-			flex: 2;
+			flex: 3;
 			padding-right: 20px;
+		}
+		.text-content p {
+			margin-bottom: 15px;
+		}
+		.text-content h4 {
+			margin-bottom: 5px;
+		}
+		.text-content ul {
+			margin-left: 15px;
 		}
 		.image-container {
 			flex: 1;
 			position: sticky;
-			top: 20px;
 			text-align: center;
-			margin-left: 20px;
-			margin-right: 20px;
 			align-self: flex-start;
+			padding: 15px;
 		}
 		.imageToTheSide {
-			max-width: 100%;
+			border-radius: 10px;
+			margin-top: 30px;
+			height: calc(100vh - 85px);
+			transition: opacity 0.7s cubic-bezier(0.47, 0.03, 0.26, 1);
+			aspect-ratio: 9 / 16;
+    		object-fit: cover;
 		}
 		ul {
 			padding-left: 20px;
-			margin-bottom: 20px;
 		}
 		li {
 			cursor: pointer;
 			margin-bottom: 5px;
-			transition: color 0.3s ease;
+			transition: color 0.5s ease;
 		}
 		li:hover {
 			font-weight: bold;
 		}
 		#infoText {
 			padding: 15px;
-			background-color: #f8f8f8;
-			border-left: 4px solid #000000;
+			background-color: #292828;
+			border-left: 4px solid #b1b1b1;
 			margin: 15px 0;
 		}
 		.webring-content {
@@ -69,12 +104,55 @@
 		.webring-content a img:hover {
 			transform: scale(1.05);
 		}
+		.mobile-bg {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			object-fit: cover;
+			object-position: top center;
+			z-index: -2;
+			opacity: 0.2;
+			display: none;
+			transition: opacity 1s cubic-bezier(0.47, 0.03, 0.26, 1);
+		}
+
+
+		@media screen and (max-width: 800px) {
+			.image-container {
+				display:none;
+			}
+			.text-content {
+				padding-right: 0;
+			}
+			.mobile-bg {
+				display: block
+			}
+			/* * {
+				font-size: 3.5vw
+			} */
+		}
+
+		@media screen and (max-width: 500px) {
+			* {
+				font-size: 3.5vw
+			}
+		}
+
+		@media screen and (min-width: 1000px) {
+			.content-container {
+				width: calc(1000px + 15vw);
+			}
+		}
+
 	</style>
 </head>
 <body>
+	<img class="mobile-bg" src="./gallery/head.jpg" alt="Frieren Journey's End PNG">
 	<div class="content-container">
 		<div class="text-content">
-			<p>Hello! My name is Taran. I am a 26 year old furry on the internet. Who is to lazy to make a proper site!</p>
+			<p>Hello! My name is Taran. I am a 26 year old furry on the internet. Who is so lazy to make a proper site that her friend baddie had to help!</p>
 			<p>I actually know a lot of technology related matters, like Server Administration, Backend Development and Machine Learning Research, witch a touch of engineering. But this is just stuff I do online, I have a life.</p>
 
 			<h4>Stuff I currently do online (click on any item for more info):</h4>
@@ -90,12 +168,99 @@
 			<div class="webring-content"></div>
 		</div>
 		<div class="image-container">
-			<img src="./meInASuit.png" alt="Frieren Journey's End PNG" class="imageToTheSide">
-			<p>OMG IT'S ME! :3</p>
+			<img src="./gallery/head.jpg" alt="Frieren Journey's End PNG" class="imageToTheSide">
+			<!-- <p>OMG IT'S ME! :3</p> -->
 		</div>
 	</div>
 	
 	<script>
+		// Image cache to store blobs in memory
+		const imageCache = new Map();
+
+		// Preload image and convert to blob
+		async function preloadImageAsBlob(src) {
+			if (imageCache.has(src)) {
+				return imageCache.get(src);
+			}
+
+			try {
+				const response = await fetch(src);
+				const blob = await response.blob();
+				const blobUrl = URL.createObjectURL(blob);
+				imageCache.set(src, blobUrl);
+				return blobUrl;
+			} catch (error) {
+				console.error('Error preloading image:', src, error);
+				return src; // Fallback to original src
+			}
+		}
+
+		function changeImageWithTransition(src) {
+			const img = document.querySelector('.imageToTheSide');
+			const mobileBg = document.querySelector('.mobile-bg');
+			
+			// Fade out both images
+			img.style.opacity = '0'; // its not 0 to make sure browser loads blob
+			mobileBg.style.opacity = '0';
+			
+			// Wait for fade out, then change source and fade in
+			setTimeout(async () => {
+				// Use cached blob URL if available
+				const blobUrl = imageCache.get(src) || src;
+				img.src = blobUrl;
+				mobileBg.src = blobUrl; // Also update mobile background
+			}, 1000);
+			setTimeout(async () => {
+				img.style.opacity = '1';
+				mobileBg.style.opacity = '0.2'; // Restore original opacity from CSS
+			}, 1200);
+		}
+
+		const images = [
+			// From 001 to 034
+			'./gallery/001.jpg','./gallery/002.jpg','./gallery/003.jpg','./gallery/004.jpg','./gallery/005.jpg',/*'./gallery/006.jpg',*/'./gallery/007.jpg','./gallery/008.jpg','./gallery/009.jpg','./gallery/010.jpg','./gallery/011.jpg','./gallery/012.jpg','./gallery/013.jpg','./gallery/014.jpg',/*'./gallery/015.jpg',*/'./gallery/016.jpg','./gallery/017.jpg',/*'./gallery/018.jpg','./gallery/019.jpg','./gallery/020.jpg','./gallery/021.jpg','./gallery/022.jpg',*/'./gallery/023.jpg',/*'./gallery/024.jpg',*/'./gallery/025.jpg','./gallery/026.jpg','./gallery/027.jpg','./gallery/028.jpg','./gallery/029.jpg','./gallery/030.jpg',/*'./gallery/031.jpg','./gallery/032.jpg','./gallery/033.jpg',*/'./gallery/034.jpg',
+			// From 036 to 042
+			'./gallery/036.jpg',/*'./gallery/037.jpg',*/'./gallery/038.jpg','./gallery/039.jpg','./gallery/040.jpg','./gallery/041.jpg','./gallery/042.jpg',
+			// From 084 to 086
+			/*'./gallery/084.jpg',*/'./gallery/085.jpg','./gallery/086.jpg',
+			// From 089 to 111
+			'./gallery/089.jpg',/*'./gallery/090.jpg','./gallery/091.jpg','./gallery/092.jpg',*/'./gallery/093.jpg','./gallery/094.jpg','./gallery/095.jpg','./gallery/096.jpg','./gallery/097.jpg',/*'./gallery/098.jpg','./gallery/099.jpg',/*'./gallery/100.jpg','./gallery/101.jpg',*/'./gallery/102.jpg',/*'./gallery/103.jpg',*/'./gallery/104.jpg','./gallery/105.jpg',/*'./gallery/106.jpg','./gallery/107.jpg',*/'./gallery/108.jpg','./gallery/109.jpg',/*'./gallery/110.jpg','./gallery/111.jpg',*/
+			// From 115 to 124
+			'./gallery/115.jpg','./gallery/116.jpg','./gallery/117.jpg','./gallery/118.jpg',/*'./gallery/119.jpg','./gallery/120.jpg',*/'./gallery/121.jpg','./gallery/122.jpg','./gallery/123.jpg',/*'./gallery/124.jpg',*/
+			'./gallery/127.jpg',
+		];
+		const nsfwImages = [ // For future use
+
+		];
+		
+		// Random image selection without duplicates
+		let usedImages = [];
+		
+		function getRandomImage() {
+			// If all images have been used, reset and start with head.jpg
+			if (usedImages.length >= images.length) {
+				usedImages = [];
+				return './gallery/head.jpg';
+			}
+			
+			// Get available images (not yet used)
+			const availableImages = images.filter(img => !usedImages.includes(img));
+			
+			// Select random image from available ones
+			const randomIndex = Math.floor(Math.random() * availableImages.length);
+			const selectedImage = availableImages[randomIndex];
+			
+			// Mark as used
+			usedImages.push(selectedImage);
+			
+			return selectedImage;
+		}
+		
+		setInterval(() => {
+			const nextImage = getRandomImage();
+			changeImageWithTransition(nextImage);
+		}, 6000); // Change image every 6 seconds
+
 		function changeMessage(type) {
 			const infoText = document.getElementById('infoText');
 			switch(type) {
@@ -112,7 +277,13 @@
 					infoText.textContent = "Click on any item in the list above to learn more about it!";
 			}
 		}
+
+		// Preload all images on page load
 		window.addEventListener('DOMContentLoaded', () => {
+			// Preload images asynchronously
+			images.forEach(src => preloadImageAsBlob(src));
+			
+			// Fetch webring data
 			fetch("https://corsproxy.io/?https://baddie.gay/cutenet.json")
 				.then(response => response.json())
 				.then(webring => {
